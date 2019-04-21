@@ -41,7 +41,9 @@ void insere_inicio(Nodo **pp_ini, int valor)
         pp_aux->valor = valor;
         pp_aux->proximo = *pp_ini;
         *pp_ini = pp_aux;
-    } else {
+    }
+    else
+    {
         (*pp_ini)->valor = valor;
     }
 };
@@ -66,6 +68,37 @@ void remove_primeiro(Nodo **pp_ini)
     free(*pp_ini);
 
     *pp_ini = pp_aux;
+};
+
+// 15) Implemente uma função para remover o último nodo da lista.
+void remove_ultimo(Nodo **pp_ini, Nodo **pp_fim)
+{
+    Nodo *pp_aux = (Nodo *)malloc(sizeof(Nodo));
+
+    if (*pp_fim != *pp_ini)
+    {
+        pp_aux = *pp_ini;
+        while (pp_aux->proximo)
+        {
+            if (pp_aux->proximo == *pp_fim)
+            {
+                break;
+            }
+            pp_aux = pp_aux->proximo;
+        }
+
+        pp_aux->proximo = NULL;
+        *pp_fim = NULL;
+        free(*pp_fim);
+
+        *pp_fim = pp_aux;
+    }
+    else
+    {
+        (*pp_fim)->valor = NULL;
+        (*pp_fim)->proximo = NULL;
+        *pp_fim = *pp_ini;
+    }
 };
 
 // ---------------- || --------------
@@ -108,6 +141,18 @@ int main(int argc, char const *argv[])
 
     // 14) Remova o primeiro nodo da lista e imprima a lista.
     remove_primeiro(&nodo_ini);
+    imprime_lista_inicio(nodo_ini);
+
+    // 16) Remova o último nodo da lista e imprima a lista.
+    remove_ultimo(&nodo_ini, &nodo_fim);
+    imprime_lista_inicio(nodo_ini);
+
+    // 17) Remova o último nodo da lista e imprima a lista.
+    remove_ultimo(&nodo_ini, &nodo_fim);
+    imprime_lista_inicio(nodo_ini);
+
+    // 18) Remova o último nodo da lista e imprima a lista.
+    remove_ultimo(&nodo_ini, &nodo_fim);
     imprime_lista_inicio(nodo_ini);
     return 0;
 }
