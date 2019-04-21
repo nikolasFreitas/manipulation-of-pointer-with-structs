@@ -8,6 +8,7 @@ typedef struct
   struct Nodo *proximo;
 } Nodo;
 
+// Functions to help 
 void imprime_lista_inicio(Nodo *p)
 {
   int count = 1;
