@@ -12,7 +12,7 @@ void imprime_lista_inicio(Nodo *pp_ini)
 {
     int count = 1;
 
-    if (pp_ini->proximo)
+    if (pp_ini->valor)
     {
         printf("Imprimindo o valor das listas\n");
         printf("Ini=>");
@@ -35,12 +35,15 @@ void imprime_lista_inicio(Nodo *pp_ini)
 // 5) Implemente uma função para inserir um nodo no início da lista:
 void insere_inicio(Nodo **pp_ini, int valor)
 {
-    Nodo *pp_aux = (Nodo *)malloc(sizeof(Nodo));
-
-    pp_aux->valor = valor;
-    pp_aux->proximo = *pp_ini;
-
-    *pp_ini = pp_aux;
+    if ((*pp_ini)->valor)
+    {
+        Nodo *pp_aux = (Nodo *)malloc(sizeof(Nodo));
+        pp_aux->valor = valor;
+        pp_aux->proximo = *pp_ini;
+        *pp_ini = pp_aux;
+    } else {
+        (*pp_ini)->valor = valor;
+    }
 };
 
 // 9) Implemente uma função para inserir um nodo no final da lista:
@@ -54,16 +57,27 @@ void insere_fim(Nodo **pp_fim, int valor)
     *pp_fim = pp_aux;
 };
 
+void remove_primeiro(Nodo **pp_ini)
+{
+    Nodo *pp_aux = (Nodo *)malloc(sizeof(Nodo));
+    pp_aux = (*pp_ini)->proximo;
+
+    *pp_ini = NULL;
+    free(*pp_ini);
+
+    *pp_ini = pp_aux;
+};
+
 // ---------------- || --------------
 int main(int argc, char const *argv[])
 {
     Nodo *nodo_ini, *nodo_fim;
 
     nodo_ini = (Nodo *)malloc(sizeof(Nodo));
-    nodo_ini->valor = 1;
+    nodo_fim = (Nodo *)malloc(sizeof(Nodo));
+    nodo_ini->valor = NULL;
     nodo_ini->proximo = NULL;
 
-    nodo_fim = (Nodo *)malloc(sizeof(Nodo));
     nodo_fim = nodo_ini;
 
     imprime_lista_inicio(nodo_ini);
@@ -84,5 +98,16 @@ int main(int argc, char const *argv[])
     insere_fim(&nodo_fim, 6);
     imprime_lista_inicio(nodo_ini);
 
+    // 11) Insira um nodo com valor 7 no final da lista e chame a função imprime_lista_inicio().
+    insere_fim(&nodo_fim, 7);
+    imprime_lista_inicio(nodo_ini);
+
+    // 13) Remova o primeiro nodo da lista e imprima a lista.
+    remove_primeiro(&nodo_ini);
+    imprime_lista_inicio(nodo_ini);
+
+    // 14) Remova o primeiro nodo da lista e imprima a lista.
+    remove_primeiro(&nodo_ini);
+    imprime_lista_inicio(nodo_ini);
     return 0;
 }
